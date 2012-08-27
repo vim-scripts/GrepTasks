@@ -1,0 +1,47 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4196
+
+DESCRIPTION
+This plugin defines commands to search for tasks and TODO markers embedded in
+files, and populates the quickfix list with the resulting lines. Most IDEs
+offer such a view, too.
+
+HOW IT WORKS
+The :vimgrep command is used with a predefined pattern. Search targets for
+the current buffer, all arguments, listed buffers, windows in the current tab
+page or all tab pages can be used (leveraging the GrepHere.vim and
+GrepCommands.vim plugins).
+
+SEE ALSO
+- To move to individual tasks and TODO markers in the current buffer without
+  building and going through the quickfix list, you can use the companion
+  TaskMotions.vim plugin (vimscript #3990).
+
+USAGE
+All commands search for case-sensitive occurrences of FIXME:, TODO:, and XXX:
+in the files. (This is customizable via g:GrepTasks_PatternTemplate).
+When the optional [{pattern}] is specified, only occurrences that contain the
+{pattern} after the marker keyword are included.
+
+:GrepHereTasks[!] [{pattern}]
+                        Search for tasks and TODOs in the current buffer and
+                        set the error list to the matches.
+
+:ArgGrepTasks[!] [{pattern}]
+                        Search for tasks and TODOs in all files from the
+                        argument-list and set the error list to the matches.
+
+:BufGrepTasks[!] [{pattern}]
+                        Search for tasks and TODOs in all listed buffers and
+                        set the error list to the matches.
+
+:WinGrepTasks[!] [{pattern}]
+                        Search for tasks and TODOs in all buffers visible in
+                        the current tab and set the error list to the matches.
+
+:TabGrepTasks[!] [{pattern}]
+                        Search for tasks and TODOs in all buffers visible in
+                        all tab pages and set the error list to the matches.
+
+:VimGrepTasks[!] [/{pattern}/] {file} ...
+                        Search for tasks and TODOs in the files {file} ... and
+                        set the error list to the matches.

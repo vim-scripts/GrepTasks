@@ -1,0 +1,124 @@
+*GrepTasks.txt*         Grep for tasks and TODO markers.
+
+			 GREP TASKS    by Ingo Karkat
+							       *GrepTasks.vim*
+description			|GrepTasks-description|
+usage				|GrepTasks-usage|
+installation			|GrepTasks-installation|
+configuration			|GrepTasks-configuration|
+limitations			|GrepTasks-limitations|
+known problems			|GrepTasks-known-problems|
+todo				|GrepTasks-todo|
+history				|GrepTasks-history|
+
+==============================================================================
+DESCRIPTION					       *GrepTasks-description*
+
+This plugin defines commands to search for tasks and TODO markers embedded in
+files, and populates the quickfix list with the resulting lines. Most IDEs
+offer such a view, too.
+
+HOW IT WORKS								     *
+
+The |:vimgrep| command is used with a predefined pattern. Search targets for
+the current buffer, all arguments, listed buffers, windows in the current tab
+page or all tab pages can be used (leveraging the |GrepHere.vim| and
+|GrepCommands.vim| plugins).
+
+SEE ALSO								     *
+
+- To move to individual tasks and TODO markers in the current buffer without
+  building and going through the quickfix list, you can use the companion
+  |TaskMotions.vim| plugin (vimscript #3990).
+
+==============================================================================
+USAGE							     *GrepTasks-usage*
+
+All commands search for case-sensitive occurrences of FIXME:, TODO:, and XXX:
+in the files. (This is customizable via |g:GrepTasks_PatternTemplate|).
+When the optional [{pattern}] is specified, only occurrences that contain the
+{pattern} after the marker keyword are included.
+							      *:GrepHereTasks*
+:GrepHereTasks[!] [{pattern}]
+			Search for tasks and TODOs in the current buffer and
+			set the error list to the matches.
+							       *:ArgGrepTasks*
+:ArgGrepTasks[!] [{pattern}]
+			Search for tasks and TODOs in all files from the
+			|argument-list| and set the error list to the matches.
+							       *:BufGrepTasks*
+:BufGrepTasks[!] [{pattern}]
+			Search for tasks and TODOs in all listed buffers and
+			set the error list to the matches.
+							       *:WinGrepTasks*
+:WinGrepTasks[!] [{pattern}]
+			Search for tasks and TODOs in all buffers visible in
+			the current tab and set the error list to the matches.
+							       *:TabGrepTasks*
+:TabGrepTasks[!] [{pattern}]
+			Search for tasks and TODOs in all buffers visible in
+			all tab pages and set the error list to the matches.
+
+								  *:GrepTasks*
+:VimGrepTasks[!] [/{pattern}/] {file} ...
+			Search for tasks and TODOs in the files {file} ... and
+			set the error list to the matches.
+
+==============================================================================
+INSTALLATION					      *GrepTasks-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim GrepTasks*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES					      *GrepTasks-dependencies*
+
+- Requires Vim 7.0 or higher.
+- Requires the GrepCommands plugin (vimscript #4173).
+- Requires the GrepHere plugin (vimscript #4191).
+
+==============================================================================
+CONFIGURATION					     *GrepTasks-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+
+						 *g:GrepTasks_PatternTemplate*
+Tasks and TODO markers are detected by a regular expression, which is built
+from a |printf()|-style template, into which the optional filter pattern is
+inserted at the %s keyword: >
+    let g:GrepTasks_PatternTemplate = '\<TODO:\s\?.*%s'
+<
+						       *g:GrepTasks_GrepFlags*
+By default, the quickfix list is filled with all found tasks; the first found
+task isn't jumped to. You can adapt that by changing the |:vimgrep| flags: >
+    let g:GrepTasks_GrepFlags = 'gj'
+<
+==============================================================================
+LIMITATIONS					       *GrepTasks-limitations*
+
+KNOWN PROBLEMS					    *GrepTasks-known-problems*
+
+TODO							      *GrepTasks-todo*
+
+IDEAS							     *GrepTasks-ideas*
+
+==============================================================================
+HISTORY							   *GrepTasks-history*
+
+1.00	27-Aug-2012
+First published version.
+
+0.01	19-Mar-2012
+Started development.
+
+==============================================================================
+Copyright: (C) 2012 Ingo Karkat
+The VIM LICENSE applies to this script; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
