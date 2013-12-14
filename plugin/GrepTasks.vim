@@ -11,6 +11,8 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.01.006	05-Nov-2012	Remove -complete=expression; it's not useful for
+"				completing regexp patterns.
 "   1.00.005	26-Aug-2012	Use <q-args>; due to its escaping, <f-args> is
 "				fundamentally flawed for use with arbitrary
 "				filespecs.
@@ -39,11 +41,11 @@ endif
 
 "- commands --------------------------------------------------------------------
 
-command! -bang -count -nargs=? -complete=expression GrepHereTasks call GrepTasks#Grep(<count>, 'GrepHere', <q-args>)
-command! -bang -count -nargs=? -complete=expression ArgGrepTasks  call GrepTasks#Grep(<count>, 'ArgGrep', <q-args>)
-command! -bang -count -nargs=? -complete=expression BufGrepTasks  call GrepTasks#Grep(<count>, 'BufGrep', <q-args>)
-command! -bang -count -nargs=? -complete=expression WinGrepTasks  call GrepTasks#Grep(<count>, 'WinGrep', <q-args>)
-command! -bang -count -nargs=? -complete=expression TabGrepTasks  call GrepTasks#Grep(<count>, 'TabGrep', <q-args>)
-command! -bang -count -nargs=+ -complete=file       VimGrepTasks  call GrepTasks#FileGrep(<count>, 'vimgrep', <q-args>)
+command! -bang -count -nargs=?                GrepHereTasks call GrepTasks#Grep(<count>, 'GrepHere', <q-args>)
+command! -bang -count -nargs=?                ArgGrepTasks  call GrepTasks#Grep(<count>, 'ArgGrep', <q-args>)
+command! -bang -count -nargs=?                BufGrepTasks  call GrepTasks#Grep(<count>, 'BufGrep', <q-args>)
+command! -bang -count -nargs=?                WinGrepTasks  call GrepTasks#Grep(<count>, 'WinGrep', <q-args>)
+command! -bang -count -nargs=?                TabGrepTasks  call GrepTasks#Grep(<count>, 'TabGrep', <q-args>)
+command! -bang -count -nargs=+ -complete=file VimGrepTasks  call GrepTasks#FileGrep(<count>, 'vimgrep', <q-args>)
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :

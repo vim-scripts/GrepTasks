@@ -1,13 +1,17 @@
 " GrepTasks.vim: Grep for tasks and TODO markers.
 "
 " DEPENDENCIES:
+"   - ingo/msg.vim autoload script
 "
-" Copyright: (C) 2012 Ingo Karkat
+" Copyright: (C) 2012-2013 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.01.006	24-Jul-2013	FIX: Use the rules for the /pattern/ separator
+"				as stated in :help E146.
+"   1.01.005	14-Jun-2013	Use ingo/msg.vim.
 "   1.00.004	27-Aug-2012	To avoid that spaces in the optional pattern
 "				have to be escaped, do not first split off the
 "				firstArgument, but do a (mostly-correct) parsing
@@ -30,19 +34,14 @@ function! GrepTasks#Grep( count, grepCommand, pattern, ... )
     try
 	execute (a:count ? a:count : '') . a:grepCommand '/' . escape(l:pattern, '/') . '/' . g:GrepTasks_GrepFlags a:0 ? a:1 : ''
     catch /^Vim\%((\a\+)\)\=:E/
-	" v:exception contains what is normally in v:errmsg, but with extra
-	" exception source info prepended, which we cut away.
-	let v:errmsg = substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', '')
-	echohl ErrorMsg
-	echomsg v:errmsg
-	echohl None
+	call ingo#msg#VimExceptionMsg()
     endtry
 endfunction
 
 function! GrepTasks#FileGrep( count, grepCommand, arguments )
     let [l:pattern, l:fileglobs] = ['', a:arguments]
 
-    let l:optionalPatternMatch = matchlist(a:arguments, '^\(\i\@!\S\)\(.\{-}\)\%(\%(^\|[^\\]\)\%(\\\\\)*\\\)\@<!\1\%(\%(^\|[^\\]\)\%(\\\\\)*\\\)\@<! \(.*\)$')
+    let l:optionalPatternMatch = matchlist(a:arguments, '^\([[:alnum:]\\"|]\@![\x00-\xFF]\)\(.\{-}\)\%(\%(^\|[^\\]\)\%(\\\\\)*\\\)\@<!\1\%(\%(^\|[^\\]\)\%(\\\\\)*\\\)\@<! \(.*\)$')
     if ! empty(l:optionalPatternMatch)
 	let [l:pattern, l:fileglobs] = l:optionalPatternMatch[2:3]
 
